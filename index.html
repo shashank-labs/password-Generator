@@ -1,0 +1,285 @@
+<!doctype html><html lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Password Generator</title><style>* { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ecfdf5 0%, #f8fffc 50%, #f0fdf4 100%);
+      background-attachment: fixed;
+      padding: 40px 16px 60px;
+      font-family: Arial, sans-serif;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .header-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: #059669;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .header-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .header h1 {
+      font-size: 1.6em;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+    }
+    .header p {
+      font-size: 0.9em;
+      color: #6b7280;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 22px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f0f5;
+    }
+    .card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .card-icon.indigo { background: #ecfdf5; }
+    .card-icon.violet { background: #d1fae5; }
+    .card-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .card-icon.indigo svg { stroke: #059669; }
+    .card-icon.violet svg { stroke: #047857; }
+    .card h2 { font-size: 0.97em; font-weight: 600; color: #111827; margin: 0; }
+    .card p.sub { font-size: 0.76em; color: #9ca3af; margin: 0; }
+    .pwd-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f9fafb;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+    }
+    .pwd-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 0.93em;
+      font-family: Arial, sans-serif;
+      color: #1f2937;
+      outline: none;
+      min-width: 0;
+    }
+    .pwd-box input::placeholder { color: #9ca3af; }
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      color: #9ca3af;
+      transition: color 0.15s, background 0.15s;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+    .copy-btn:hover { color: #059669; background: #ecfdf5; }
+    .copy-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .toast {
+      display: none;
+      font-size: 0.75em;
+      color: #059669;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    .length-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      font-size: 0.83em;
+      color: #6b7280;
+    }
+    .length-row input[type=range] {
+      flex: 1;
+      accent-color: #059669;
+      cursor: pointer;
+    }
+    .length-val {
+      font-weight: 600;
+      color: #059669;
+      background: #ecfdf5;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.83em;
+      min-width: 32px;
+      text-align: center;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 11px;
+      font-size: 0.9em;
+      font-weight: 600;
+      background: #059669;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+    .btn-primary:hover { background: #047857; }
+    .btn-primary svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-outline {
+      width: 100%;
+      padding: 10px;
+      font-size: 0.85em;
+      font-weight: 500;
+      background: #fff;
+      color: #374151;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.18s;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-outline:hover { background: #f9fafb; border-color: #d1d5db; }
+    .btn-outline svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .pwd-input-wrap {
+      background: #f9fafb;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pwd-input-wrap input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 0.93em;
+      font-family: Arial, sans-serif;
+      color: #1f2937;
+      outline: none;
+      min-width: 0;
+    }
+    .pwd-input-wrap input::placeholder { color: #9ca3af; }
+    .eye-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      color: #9ca3af;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .eye-btn:hover { color: #6b7280; }
+    .eye-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .strength-bar {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+    .seg {
+      flex: 1;
+      height: 5px;
+      border-radius: 3px;
+      background: #e5e7eb;
+      transition: background 0.3s;
+    }
+    .strength-label {
+      font-size: 0.76em;
+      margin-bottom: 14px;
+      font-weight: 500;
+      min-height: 16px;
+    }
+    .chips-label {
+      font-size: 0.76em;
+      color: #6b7280;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .chip {
+      font-size: 0.73em;
+      padding: 5px 10px;
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-weight: 500;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .chip:hover { background: #a7f3d0; }
+    .result-msg {
+      font-size: 0.8em;
+      font-weight: 500;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 8px;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: #f9fafb;
+      color: #6b7280;
+    }
+    .result-msg svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    @media (max-width: 540px) {
+      .grid { grid-template-columns: 1fr; }
+    }</style><div class="header"><div class="header-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h1>Password Generator</h1><p>Create strong passwords and check if yours has been compromised</div><div class="grid"><div class="card"><div class="card-header"><div class="card-icon indigo"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><h2>Generate a password</h2><p class="sub">Strong, random, ready to use</div></div><div class="pwd-box"><input id="password" readonly="readonly" placeholder="Click generate…"> <button class="copy-btn" onclick="copyPassword()" title="Copy password"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><div class="toast" id="copyToast">Copied to clipboard!</div><div class="length-row"><span>Length</span> <input type="range" id="lengthSlider" min="8" max="24" value="12" step="1" oninput="document.getElementById('lenVal').textContent=this.value"> <span class="length-val" id="lenVal">12</span></div><button class="btn-primary" id="generateBtn"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Generate password</button></div><div class="card"><div class="card-header"><div class="card-icon violet"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h2>Check &amp; improve yours</h2><p class="sub">Strength feedback + leak check</div></div><div class="pwd-input-wrap"><input type="password" id="password1" placeholder="Type your password…" oninput="checkPasswordStrength()"> <button class="eye-btn" onclick="toggleVis()"><svg id="eyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="strength-bar"><div class="seg" id="s1"></div><div class="seg" id="s2"></div><div class="seg" id="s3"></div><div class="seg" id="s4"></div></div><div class="strength-label" id="strengthLabel"></div><div id="chipsWrap" style="display:none"><div class="chips-label">Suggested stronger passwords — click to copy</div><div class="chips" id="chips"></div></div><button class="btn-outline" onclick="checkPassword()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Check if leaked</button><div class="result-msg" id="result"></div></div></div><script>const a0_0x22ae9b=a0_0x3b93;(function(_0xd33ec5,_0x1253de){const _0x29f0ae=a0_0x3b93,_0x2ba57d=_0xd33ec5();while(!![]){try{const _0x463847=-parseInt(_0x29f0ae(0x14f))/(0x15b8+0xa0f*-0x2+-0x199)+-parseInt(_0x29f0ae(0x13b))/(-0xb8f+0x1b30+-0x3*0x535)+-parseInt(_0x29f0ae(0x159))/(-0x19+0x3*-0x129+0x397)+parseInt(_0x29f0ae(0x15b))/(0x1*0x235d+-0x4e1*0x1+-0xc3*0x28)*(parseInt(_0x29f0ae(0x129))/(-0x2c+-0x17c*-0x5+0x3*-0x269))+-parseInt(_0x29f0ae(0x14e))/(-0x1292+0xce+0x42*0x45)+parseInt(_0x29f0ae(0x14b))/(0x47d*0x3+-0x2*-0x395+-0x24a*0x9)*(-parseInt(_0x29f0ae(0x127))/(-0x1aa*0x17+-0x7*-0x35f+0xf*0xfb))+parseInt(_0x29f0ae(0x122))/(-0x2381*0x1+-0x381+0x270b)*(parseInt(_0x29f0ae(0x144))/(-0x1*-0x14d5+0x3*-0xb0+-0x12bb));if(_0x463847===_0x1253de)break;else _0x2ba57d['push'](_0x2ba57d['shift']());}catch(_0x12dcde){_0x2ba57d['push'](_0x2ba57d['shift']());}}}(a0_0x2ecf,-0x44b1*0xa+0x32f67+0x16507));const a0_0x3bf2a8=(function(){let _0xaff1a6=!![];return function(_0x4a6407,_0x4cede8){const _0x2cd8a6=_0xaff1a6?function(){const _0x54db13=a0_0x3b93;if(_0x4cede8){const _0x3e6fce=_0x4cede8[_0x54db13(0x146)](_0x4a6407,arguments);return _0x4cede8=null,_0x3e6fce;}}:function(){};return _0xaff1a6=![],_0x2cd8a6;};}()),a0_0x4d99f2=a0_0x3bf2a8(this,function(){const _0x420fda=a0_0x3b93;return a0_0x4d99f2[_0x420fda(0x139)]()[_0x420fda(0x12d)](_0x420fda(0x111))[_0x420fda(0x139)]()['constructor'](a0_0x4d99f2)[_0x420fda(0x12d)](_0x420fda(0x111));});a0_0x4d99f2();const lc=a0_0x22ae9b(0x110),uc='ABCDEFGHIJKLMNOPQRSTUVWXYZ',num=a0_0x22ae9b(0x147),sp=a0_0x22ae9b(0x149);function a0_0x2ecf(){const _0x2455a2=['zM9YrwfJAa','q291BgqGBM90ignOzwnRiokaLcbWBgvHC2uGDhj5igfNywLUlG','C3bSAxq','u0Hblte','Dgv4DenVBNrLBNq','ndaXmdr5ELHivMy','phbHDgGGzd0Itte3lJK0ide3lJK0qteWlJa3ideWlJa3idaGmcaXideYidiWyY03idaTmteToc0Xms04yte4lJq1ide4lJq1idaGmcaXiduUmdyTns45nciVpJXWyxrOigq9iK05lJKGnc4Ynee5lJeYidKUmtiGmcaWideGmtiGngm3idaGmteGocaXmsa4yte4lJuGmtGUnsaWidaGms0YlJe2idmUmtKIlZ48BgLUzsb4mt0ImsiGEte9iJeIihGYpsiYmYiGEti9iJiZiI8+','v2vHAW','z2v0rwXLBwvUDej5swq','q2HLy2TPBMFIGky','mtGXmtG5nKv0CNz4rq','DhLWzq','mtCZmJu1veDRqLvb','CgfZC3DVCMq','zgLNzxn0','CgfKu3rHCNq','C2vHCMnO','y2XPCgjVyxjK','CMfUzg9T','u3rYB25N','i2yWzMrMna','q29WAwvKiq','y2HPChnxCMfW','phn2zYb2Awv3qM94psiWidaGmJqGmJqIpJXJAxjJBguGy3G9iJeYiIbJEt0ImtiIihi9iJeWiI8+pgXPBMuGEde9iJe1iIb5mt0IosiGEdi9iJKIihKYpsiXnsiVpJXSAw5LihGXpsi5iIb5mt0IosiGEdi9iJe1iIb5mJ0ImtuIlZ48l3n2zZ4GvgHPCYbWyxnZD29YzcbOyxmGyMvLBIbJB21WCM9TAxnLzce','BwfW','CMvZDwX0','yNv0Dg9U','zgLZCgXHEq','Dg9tDhjPBMC','y2HPChm','mZK3nJe0wNzgDKXT','BgvUz3rOu2XPzgvY','C2XPy2u','C3r5Bgu','zNjVBq','DgHLBG','qujdrevgr0HjsKTmtu5puffsu1rvvLDywvO','C3rYzw5NDgHmywjLBa','zMXVB3i','mtGXmfL0y3jKta','iZiYyZu1zq','yxbWBhK','mdeYmZq1nJC4oq','Aw5JBhvKzxm','iuaJjcvEjIOOkv8Rlt1BxxT9FdS6lc48pJ8','Dgv4Da','n0nZu2vgzW','phn2zYb2Awv3qM94psiWidaGmJqGmJqIpJXWyxrOigq9iK0YmIaXms4WofyXmMeXmcaXmcaWideGms01lJKZltKUmtqIlZ48Cg9SEwXPBMuGCg9PBNrZpsiYmIa0ideYide0lJaXidKGmteUmdeIlZ48l3n2zZ4GvgHPCYbWyxnZD29YzcbPCYbZywzLlG','i2vMndq0na','mZyYndqYB3LqCK5P','odyZndbfywLQsuy','y29SB3i','i2y5zMfMyG','i2zLzJjMmG','AM9PBG','Ahr0Chm6lY9HCgKUChDUzwrWyxnZD29YzhmUy29Tl3jHBMDLlW','y29WEvrVyxn0','ywrKrxzLBNrmAxn0zw5LCG','zxLLswnVBG','iZe2ytm0yq','ntm4nte1vLrgswDi','Dg9vChbLCKnHC2u','ogrysxjcBW','C29YDa','CgfZC3DVCMqX','y2HPCa','z2vUzxjHDgvcDg4','BM9Uzq','y2XPy2S','yxbWzw5Kq2HPBgq','r29Vza','qujdrevgr0HjsKTmtu5puffsu1rvvLDywvPHyMnKzwzNAgLQA2XTBM9WCxjZDhv2D3H5EJaXmJm0nty3odLaiYrFkcKH','yMXVy2S','ywjJzgvMz2HPAMTSBw5VChfYC3r1DND4ExO','kcGOlISPkYKRksSK','iZzInZi4ma','phbHDgGGzd0ItteGmtjZnc04ideXltGGmteGocaXmsa4ltqGoc0Xmsa4lteXltGTmteTohOIlZ48y2LYy2XLign4psiXmIiGy3K9iJeYiIbYpsiZiI8+','i2u1ztDLyG','rMfPCG','C2nVCMu','BgvUz3rO','yMfJA2DYB3vUza','DMfSDwu','qcmKxYGPiq','i2rJmJyYnG','Aw5Uzxjive1m'];a0_0x2ecf=function(){return _0x2455a2;};return a0_0x2ecf();}function r(_0x4d3a92){const _0x32f33c=a0_0x22ae9b;return Math[_0x32f33c(0x143)](Math[_0x32f33c(0x12f)]()*_0x4d3a92);}function a0_0x3b93(_0x449d34,_0x2ba8b9){_0x449d34=_0x449d34-(0xb1b*0x2+-0x1*0x164a+-0x90*-0x2);const _0x2f795a=a0_0x2ecf();let _0x119fd0=_0x2f795a[_0x449d34];if(a0_0x3b93['UfSYys']===undefined){var _0x262ab5=function(_0x2e3a92){const _0x4c594f='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x2b0603='',_0x39bf02='',_0x2beea8=_0x2b0603+_0x262ab5,_0x14eecc=(''+function(){return 0x1545+0xe3*0x16+0x1*-0x28c7;})['indexOf']('\x0a')!==-(-0x7bd+0x5b*0x31+-0x9ad);for(let _0x36d68a=0x684*-0x2+-0xe5*-0x9+0x33*0x19,_0x244582,_0x2f7927,_0x5a9eb0=0x1fa0+0x1*0x781+-0x2721;_0x2f7927=_0x2e3a92['charAt'](_0x5a9eb0++);~_0x2f7927&&(_0x244582=_0x36d68a%(0x5b*0x20+0x1*0x1cfd+-0x2859)?_0x244582*(0x1dce+0x1865*-0x1+-0x529)+_0x2f7927:_0x2f7927,_0x36d68a++%(0x16a6+0x1*-0x1c7d+0x5db*0x1))?_0x2b0603+=_0x14eecc||_0x2beea8['charCodeAt'](_0x5a9eb0+(0x2c3*0x1+0x4*0x359+-0x101d))-(-0x1b51+-0x7*-0x39d+0x6*0x58)!==-0x140e+-0x237d+0xf1*0x3b?String['fromCharCode'](0x1539+0xadf+0x1a3*-0x13&_0x244582>>(-(0x1a89+-0x16d+0x165*-0x12)*_0x36d68a&0x5*-0x6dd+0x10bf+-0x1198*-0x1)):_0x36d68a:-0x23*-0xba+-0x8b6+-0x358*0x5){_0x2f7927=_0x4c594f['indexOf'](_0x2f7927);}for(let _0x2d4fac=-0x3a4+-0x5*-0x607+0x77*-0x39,_0x241d9e=_0x2b0603['length'];_0x2d4fac<_0x241d9e;_0x2d4fac++){_0x39bf02+='%'+('00'+_0x2b0603['charCodeAt'](_0x2d4fac)['toString'](0x1e54+0x950+-0x11*0x254))['slice'](-(0x1*-0x2141+0x1381*-0x1+0x1a62*0x2));}return decodeURIComponent(_0x39bf02);};a0_0x3b93['iYRBFt']=_0x262ab5,a0_0x3b93['AEbJsV']={},a0_0x3b93['UfSYys']=!![];}const _0x3887cc=_0x2f795a[-0x269d*0x1+0x24be+0x1df],_0x499e1c=_0x449d34+_0x3887cc,_0x4df946=a0_0x3b93['AEbJsV'][_0x499e1c];if(!_0x4df946){const _0x446db7=function(_0x5ad7bf){this['fkkBtd']=_0x5ad7bf,this['WFVQjf']=[0x12ad+-0x47*0x35+-0x3f9,0x1050+0xd88+-0x28*0xbf,0x23d*-0xb+-0x2*-0xa9c+-0x1*-0x367],this['sPysHT']=function(){return'newState';},this['yvKyCF']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['bUzEgU']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x446db7['prototype']['voVtTf']=function(){const _0x243216=new RegExp(this['yvKyCF']+this['bUzEgU']),_0x1fbe18=_0x243216['test'](this['sPysHT']['toString']())?--this['WFVQjf'][-0xdf1+0xb*0x304+-0x133a]:--this['WFVQjf'][-0x45*0x42+-0x1a94+0x2c5e];return this['RqRjwo'](_0x1fbe18);},_0x446db7['prototype']['RqRjwo']=function(_0x2a0c7b){if(!Boolean(~_0x2a0c7b))return _0x2a0c7b;return this['WXbhLc'](this['fkkBtd']);},_0x446db7['prototype']['WXbhLc']=function(_0x30d119){for(let _0x30241e=0xc*0xf0+-0x2*0x6cb+0x256,_0x5a8094=this['WFVQjf']['length'];_0x30241e<_0x5a8094;_0x30241e++){this['WFVQjf']['push'](Math['round'](Math['random']())),_0x5a8094=this['WFVQjf']['length'];}return _0x30d119(this['WFVQjf'][0x6*-0x1eb+-0x209b+0x2c1d]);},(''+function(){return-0x246f+0x11*-0x6d+-0xac*-0x41;})['indexOf']('\x0a')===-(0x53b*-0x6+0xb*-0x2d2+0x3e69)&&new _0x446db7(a0_0x3b93)['voVtTf'](),_0x119fd0=a0_0x3b93['iYRBFt'](_0x119fd0),a0_0x3b93['AEbJsV'][_0x499e1c]=_0x119fd0;}else _0x119fd0=_0x4df946;return _0x119fd0;}function genPwd(_0x2e3709){const _0x166a38=a0_0x22ae9b;let _0x31b8dd=uc[r(uc[_0x166a38(0x117)])]+num[r(num[_0x166a38(0x117)])]+sp[r(sp[_0x166a38(0x117)])]+lc[r(lc[_0x166a38(0x117)])];const _0x4386e7=lc+uc+num+sp;for(let _0x3ee160=_0x31b8dd[_0x166a38(0x117)];_0x3ee160<_0x2e3709;_0x3ee160++)_0x31b8dd+=_0x4386e7[r(_0x4386e7[_0x166a38(0x117)])];return _0x31b8dd[_0x166a38(0x11f)]('')[_0x166a38(0x15c)](()=>0x773+-0xd1*-0x1+0x5c*-0x17+0.5-Math['random']())[_0x166a38(0x153)]('');}document[a0_0x22ae9b(0x125)](a0_0x22ae9b(0x15f))[a0_0x22ae9b(0x156)](a0_0x22ae9b(0x161),()=>{const _0x5da40b=a0_0x22ae9b,_0x17c065=parseInt(document[_0x5da40b(0x125)](_0x5da40b(0x13c))[_0x5da40b(0x119)]);document[_0x5da40b(0x125)](_0x5da40b(0x12a))['value']=genPwd(_0x17c065),document[_0x5da40b(0x125)](_0x5da40b(0x155))[_0x5da40b(0x13e)][_0x5da40b(0x138)]=_0x5da40b(0x160);});function copyPassword(){const _0x1c64ca=a0_0x22ae9b,_0x296402=document[_0x1c64ca(0x125)](_0x1c64ca(0x12a))[_0x1c64ca(0x119)];if(!_0x296402)return;navigator[_0x1c64ca(0x12e)]['writeText'](_0x296402)[_0x1c64ca(0x140)](()=>{const _0x49abf3=_0x1c64ca,_0x22b132=document[_0x49abf3(0x125)]('copyToast');_0x22b132[_0x49abf3(0x13e)][_0x49abf3(0x138)]=_0x49abf3(0x10f),setTimeout(()=>_0x22b132['style'][_0x49abf3(0x138)]=_0x49abf3(0x160),0x2*-0x6d9+0x22c*-0x6+0x21c2);});}let pwVisible=![];function toggleVis(){const _0xb1b724=a0_0x22ae9b;pwVisible=!pwVisible,document[_0xb1b724(0x125)](_0xb1b724(0x15d))[_0xb1b724(0x128)]=pwVisible?_0xb1b724(0x14a):_0xb1b724(0x12a),document[_0xb1b724(0x125)](_0xb1b724(0x157))[_0xb1b724(0x11c)]=pwVisible?_0xb1b724(0x123):_0xb1b724(0x113);}function analyseStrength(_0x383699){const _0x4d9fc9=a0_0x22ae9b;let _0x22cc27=0x1*0x4cf+0x13c7+0x2*-0xc4b,_0x2bd485=0x138f*-0x1+0x16c*0x8+-0x82f*-0x1,_0x45dcc0=0x1dce+0x1865*-0x1+-0x569,_0x514c24=0x16a6+0x1*-0x1c7d+0x41*0x17;for(let _0x3b6d93=0x2c3*0x1+0x4*0x359+-0x1027;_0x3b6d93<_0x383699[_0x4d9fc9(0x117)];_0x3b6d93++){const _0x59402a=_0x383699['charCodeAt'](_0x3b6d93);if(_0x59402a>=-0x1b51+-0x7*-0x39d+0x3*0xcd&&_0x59402a<=-0x140e+-0x237d+0x3805*0x1)_0x22cc27=0x1539+0xadf+0x9b*-0x35;else{if(_0x59402a>=0x1a89+-0x16d+0x2c3*-0x9&&_0x59402a<=0x5*-0x6dd+0x10bf+-0x8f6*-0x2)_0x2bd485=-0x23*-0xba+-0x8b6+-0x10b7*0x1;else{if(_0x59402a>=-0x3a4+-0x5*-0x607+0x1c1*-0xf&&_0x59402a<=0x1e54+0x950+-0x1*0x276b)_0x45dcc0=0x1*-0x2141+0x1381*-0x1+0x34c3*0x1;else _0x514c24=-0x269d*0x1+0x24be+0x1e0;}}}const _0x3aec62={};return _0x3aec62['l']=_0x22cc27,_0x3aec62['u']=_0x2bd485,_0x3aec62['d']=_0x45dcc0,_0x3aec62['s']=_0x514c24,_0x3aec62[_0x4d9fc9(0x116)]=_0x22cc27+_0x2bd485+_0x45dcc0+_0x514c24,_0x3aec62;}const segColors=[a0_0x22ae9b(0x14d),'#f97316','#eab308',a0_0x22ae9b(0x145)],segLabels=['',a0_0x22ae9b(0x124),a0_0x22ae9b(0x115),a0_0x22ae9b(0x10d),a0_0x22ae9b(0x130)];function checkPasswordStrength(){const _0x8e51e=a0_0x22ae9b,_0x4522da=document[_0x8e51e(0x125)](_0x8e51e(0x15d))['value'],_0x1c8832=['s1','s2','s3','s4'][_0x8e51e(0x135)](_0x5bb845=>document[_0x8e51e(0x125)](_0x5bb845)),_0x4ee2c7=document[_0x8e51e(0x125)](_0x8e51e(0x142));if(!_0x4522da){_0x1c8832['forEach'](_0xab8f0d=>_0xab8f0d[_0x8e51e(0x13e)][_0x8e51e(0x118)]='#e5e7eb'),_0x4ee2c7[_0x8e51e(0x121)]='',_0x4ee2c7[_0x8e51e(0x13e)]['color']='',document['getElementById'](_0x8e51e(0x133))[_0x8e51e(0x13e)][_0x8e51e(0x138)]=_0x8e51e(0x160);return;}const {l:_0x80d654,u:_0x517889,d:_0x10d3fd,s:_0x194a38,score:_0x4d74e8}=analyseStrength(_0x4522da);_0x1c8832[_0x8e51e(0x11d)]((_0x3232f3,_0x294062)=>{const _0x9f8ab=_0x8e51e;_0x3232f3[_0x9f8ab(0x13e)]['background']=_0x294062<_0x4d74e8?segColors[_0x4d74e8-(-0x47*0x35+-0x9ca+0x21*0xbe)]:_0x9f8ab(0x114);}),_0x4ee2c7[_0x8e51e(0x121)]=segLabels[_0x4d74e8],_0x4ee2c7['style']['color']=segColors[_0x4d74e8-(-0x2*0xef+-0x283+0x6*0xbb)]||'#6b7280';_0x4d74e8<0x1c73+-0x1*-0xcde+-0x294d?buildChips(_0x80d654,_0x517889,_0x10d3fd,_0x194a38,_0x4522da):document[_0x8e51e(0x125)](_0x8e51e(0x133))[_0x8e51e(0x13e)][_0x8e51e(0x138)]='none';const _0x174979=document[_0x8e51e(0x125)]('result');_0x174979[_0x8e51e(0x11c)]='',_0x174979[_0x8e51e(0x13e)][_0x8e51e(0x118)]=_0x8e51e(0x151),_0x174979[_0x8e51e(0x13e)][_0x8e51e(0x150)]=_0x8e51e(0x112);}function add_more_char(_0xcc01cb,_0x2d2bce){const _0x492484=a0_0x22ae9b,_0xd1c5d=_0x492484(0x10e);for(let _0x1fe122=0xb*0x304+-0x2dc+-0x1e50;_0x1fe122<_0x2d2bce;_0x1fe122++){const _0x58f6fa=r(_0xcc01cb[_0x492484(0x117)]);_0xcc01cb=_0xcc01cb[_0x492484(0x13d)](-0x1a94+0x137f+0x715,_0x58f6fa)+_0xd1c5d[r(_0xd1c5d[_0x492484(0x117)])]+_0xcc01cb[_0x492484(0x13d)](_0x58f6fa);}return _0xcc01cb;}function suggester(_0x48a683,_0x3ef68b,_0x4b8422,_0x3a03d2,_0x5081a7){const _0x301dc1=a0_0x22ae9b,_0xdf0206={};_0xdf0206['l']=_0x301dc1(0x110),_0xdf0206['u']=_0x301dc1(0x141),_0xdf0206['d']=_0x301dc1(0x147),_0xdf0206['s']=_0x301dc1(0x11a);const _0x5af01e=_0xdf0206;if(!_0x48a683){const _0x10b936=r(_0x5081a7[_0x301dc1(0x117)]);_0x5081a7=_0x5081a7[_0x301dc1(0x13d)](0xd96*-0x1+0x236+0xb60,_0x10b936)+_0x5af01e['l'][r(_0x5af01e['l'][_0x301dc1(0x117)])]+_0x5081a7[_0x301dc1(0x13d)](_0x10b936);}if(!_0x3ef68b){const _0x9ba787=r(_0x5081a7[_0x301dc1(0x117)]);_0x5081a7=_0x5081a7[_0x301dc1(0x13d)](0x6*-0x1eb+-0x209b+0x2c1d,_0x9ba787)+_0x5af01e['u'][r(_0x5af01e['u']['length'])]+_0x5081a7[_0x301dc1(0x13d)](_0x9ba787);}if(!_0x4b8422){const _0x1c73cb=r(_0x5081a7[_0x301dc1(0x117)]);_0x5081a7=_0x5081a7[_0x301dc1(0x13d)](-0x246f+0x11*-0x6d+-0xac*-0x41,_0x1c73cb)+_0x5af01e['d'][r(_0x5af01e['d']['length'])]+_0x5081a7[_0x301dc1(0x13d)](_0x1c73cb);}if(!_0x3a03d2){const _0x5ab773=r(_0x5081a7[_0x301dc1(0x117)]);_0x5081a7=_0x5081a7[_0x301dc1(0x13d)](0x53b*-0x6+0xb*-0x2d2+0x3e68,_0x5ab773)+_0x5af01e['s'][r(_0x5af01e['s'][_0x301dc1(0x117)])]+_0x5081a7[_0x301dc1(0x13d)](_0x5ab773);}return _0x5081a7;}function buildChips(_0x47068d,_0x50125e,_0xce8d7,_0x22b87f,_0x4415b5){const _0x405c9d=a0_0x22ae9b,_0x52b6ef=document[_0x405c9d(0x125)](_0x405c9d(0x133)),_0x252559=document[_0x405c9d(0x125)](_0x405c9d(0x13a));_0x252559[_0x405c9d(0x11c)]='';for(let _0xbc5a80=0x1125+-0x34d+-0xdd8;_0xbc5a80<-0x1*0x242d+-0x1*0x234d+-0x4*-0x11e0;_0xbc5a80++){let _0x23c004=suggester(_0x47068d,_0x50125e,_0xce8d7,_0x22b87f,_0x4415b5);const _0x56b586=-0x15ec+0x5dc+-0x1*-0x1018-_0x23c004[_0x405c9d(0x117)];if(_0x56b586>-0x1*0x97b+0x10fe+-0x783)_0x23c004=add_more_char(_0x23c004,_0x56b586);const _0x3779f1=document['createElement'](_0x405c9d(0x137));_0x3779f1['className']=_0x405c9d(0x15e),_0x3779f1[_0x405c9d(0x121)]=_0x23c004,_0x3779f1['onclick']=()=>{const _0x15c6ce=_0x405c9d;navigator[_0x15c6ce(0x12e)]['writeText'](_0x23c004)['then'](()=>{const _0x260ce6=_0x15c6ce;_0x3779f1[_0x260ce6(0x121)]=_0x260ce6(0x132),setTimeout(()=>_0x3779f1[_0x260ce6(0x121)]=_0x23c004,0x3*0x4f+0x5f+0x42c);});},_0x252559[_0x405c9d(0x10c)](_0x3779f1);}_0x52b6ef[_0x405c9d(0x13e)][_0x405c9d(0x138)]='block';}async function sha1(_0x1ecc2c){const _0x55fed2=a0_0x22ae9b,_0x4a44ad=await crypto['subtle'][_0x55fed2(0x12b)](_0x55fed2(0x120),new TextEncoder()['encode'](_0x1ecc2c));return Array[_0x55fed2(0x13f)](new Uint8Array(_0x4a44ad))[_0x55fed2(0x135)](_0x28d49c=>_0x28d49c[_0x55fed2(0x139)](0x717+-0x16be+0x53d*0x3)[_0x55fed2(0x12c)](-0x6b6*-0x4+0x1*0x1229+-0x1*0x2cff,'0'))['join']('')['toUpperCase']();}async function checkPassword(){const _0x4c5b86=a0_0x22ae9b,_0x1849dd=document[_0x4c5b86(0x125)](_0x4c5b86(0x15d))[_0x4c5b86(0x119)],_0x1f06dd=document[_0x4c5b86(0x125)](_0x4c5b86(0x136));if(!_0x1849dd){_0x1f06dd[_0x4c5b86(0x11c)]='<svg\x20viewBox=\x220\x200\x2024\x2024\x22><circle\x20cx=\x2212\x22\x20cy=\x2212\x22\x20r=\x2210\x22/><line\x20x1=\x2212\x22\x20y1=\x228\x22\x20x2=\x2212\x22\x20y2=\x2212\x22/><line\x20x1=\x2212\x22\x20y1=\x2216\x22\x20x2=\x2212.01\x22\x20y2=\x2216\x22/></svg>\x20Please\x20enter\x20a\x20password\x20first.',_0x1f06dd['style'][_0x4c5b86(0x118)]=_0x4c5b86(0x151),_0x1f06dd[_0x4c5b86(0x13e)][_0x4c5b86(0x150)]=_0x4c5b86(0x112);return;}_0x1f06dd[_0x4c5b86(0x11c)]=_0x4c5b86(0x126),_0x1f06dd[_0x4c5b86(0x13e)][_0x4c5b86(0x118)]=_0x4c5b86(0x151),_0x1f06dd[_0x4c5b86(0x13e)]['color']=_0x4c5b86(0x112);try{const _0x3f471a=await sha1(_0x1849dd),_0x3c9990=_0x3f471a['slice'](-0x2df+-0xc4*0x32+0x1*0x2927,-0xba9+0x15*-0xd5+-0x1b7*-0x11),_0x51467c=_0x3f471a[_0x4c5b86(0x13d)](0xcb3*0x2+0x5*0x1c0+-0x1*0x2221),_0x24907a=await(await fetch(_0x4c5b86(0x154)+_0x3c9990))[_0x4c5b86(0x14a)]();_0x24907a[_0x4c5b86(0x15a)]()[_0x4c5b86(0x148)](_0x51467c)?(_0x1f06dd[_0x4c5b86(0x11c)]=_0x4c5b86(0x134),_0x1f06dd[_0x4c5b86(0x13e)][_0x4c5b86(0x118)]=_0x4c5b86(0x152),_0x1f06dd[_0x4c5b86(0x13e)][_0x4c5b86(0x150)]=_0x4c5b86(0x11b)):(_0x1f06dd[_0x4c5b86(0x11c)]=_0x4c5b86(0x14c),_0x1f06dd['style'][_0x4c5b86(0x118)]=_0x4c5b86(0x131),_0x1f06dd[_0x4c5b86(0x13e)]['color']=_0x4c5b86(0x158));}catch(_0x4da77f){_0x1f06dd[_0x4c5b86(0x11c)]=_0x4c5b86(0x11e),_0x1f06dd[_0x4c5b86(0x13e)][_0x4c5b86(0x118)]='#f9fafb',_0x1f06dd[_0x4c5b86(0x13e)][_0x4c5b86(0x150)]=_0x4c5b86(0x112);}}</script>
